@@ -1,0 +1,14 @@
+.chatbox {
+  position: fixed;
+  top: 10vh;
+  left: 10vw;
+  height: 20vh;
+  width: 20vw;
+  background-color: white;
+  color: green;
+  padding: 1rem;
+}
+
+.chatbox__outputarea {
+  color: rgb(47, 47, 47);
+}

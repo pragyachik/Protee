@@ -125,10 +125,10 @@ const App = () => {
     <div className="App">
       <div className="chatbox">
         <div>
-            Chatbox
+            Chatbox <br></br><span className="text-stone-400 text-sm">&#x28;Generating abstract can take 10s or more&#41;</span>
         </div>
         <div className="chatbox__chatarea">
-          <textarea className="chatbox__textarea" onChange={getVal} placeholder="enter text here" rows="3" cols="30"></textarea>
+          <textarea className="chatbox__textarea border-2 border-slate-400" onChange={getVal} placeholder="enter text here" rows="3" cols="30"></textarea>
           {showButton? <><br></br><button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={()=>callChatGPT(false)}>get chat response</button><button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={()=>callChatGPT(true)}>get thesis</button></> : <div>Loading...</div>}
         </div>
       </div>

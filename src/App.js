@@ -10,6 +10,7 @@ const openai = new OpenAIApi(configuration);
 
 console.log("openai")
 
+
 // const DEFAULT_PARAMS = {
 //   "model": "text-davinci-003",
 //   "temperature": 0,//0.7,
@@ -33,6 +34,19 @@ console.log("openai")
 //   const data = await response.json();
 //   return data.choices[0].text;
 // }
+
+
+
+function downloadInnerHtml(filename, value, mimeType) {
+  var link = document.createElement('a');
+  mimeType = mimeType || 'text/plain';
+
+  link.setAttribute('download', filename);
+  link.setAttribute('href', 'data:' + mimeType + ';charset=utf-8,' + encodeURIComponent(value));
+  link.click(); 
+}
+
+
 
 
 const scene = new THREE.Scene();
@@ -61,31 +75,43 @@ animate();
 const App = () => {
   const [response, setResponse] = useState("chatgpt output")
   const [userRequest, setUserRequest] = useState("Say this is a test")
+  const [errormessage, setErrorMessage] = useState("200 OK")
+  const [showButton, setShowButton] = useState(true)
+  const [status, setStatus] = useState(200)
   
 
   useEffect(()=>{
-    console.log("in useeffect")
-    console.log(userRequest)
     renderer.setSize( window.innerWidth, window.innerHeight-1);
     document.getElementById('three').innerHTML = ""
     document.getElementById('three').appendChild(renderer.domElement);
   },[])
 
   const callChatGPT = async () => {
+    setShowButton(false)
     console.log(userRequest)
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: userRequest,
       temperature: 0,
-      max_tokens: 100,
+      max_tokens: 1000,
     });
+    setStatus(Number(response.status))
+    if(Number(response.status)!=200){
+      setErrorMessage(JSON.stringify(response))
+    }
     console.log(response)
+    setShowButton(true)
     let responseText = response.data.choices[0].text;
     setResponse(responseText)
   }
 
   const getVal = (value) => {
     setUserRequest(value.target.value)
+  }
+
+  const downloadResponse = () => {
+    let value = document.getElementById("outputBox").innerHTML;
+    downloadInnerHtml("output.txt", value,'text/html');
   }
 
   return (
@@ -95,11 +121,16 @@ const App = () => {
             Chatbox
         </div>
         <div className="chatbox__chatarea">
-          <input className="chatbox__textarea" type="textarea" onChange={getVal} placeholder="enter text here"></input>
-          <button className="chatbox__enter" onClick={callChatGPT}>enter</button>
+          <textarea className="chatbox__textarea" onChange={getVal} placeholder="enter text here" rows="6" cols="30"></textarea>
+          {showButton? <button className="chatbox__enter" onClick={callChatGPT}>enter</button> : <></>}
         </div>
-        <div className="chatbox__outputarea">
-          {response}
+      </div>
+      <div className="chatoutputbox">
+        <div>
+          <button className="chatbox__download" onClick={downloadResponse}>download response</button>
+        </div>
+        <div id="outputBox" className="chatbox__outputarea">
+          {status==200?response:errormessage}
         </div>
       </div>
       <div id="three"></div>

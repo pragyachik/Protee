@@ -124,17 +124,17 @@ const App = () => {
   return (
     <div className="App">
       <div className="chatbox">
-        <div className="chatbox__title">
+        <div>
             Chatbox
         </div>
         <div className="chatbox__chatarea">
-          <textarea className="chatbox__textarea" onChange={getVal} placeholder="enter text here" rows="6" cols="30"></textarea>
-          {showButton? <><br></br><button className="chatbox__enter" onClick={()=>callChatGPT(false)}>get chat response</button><button className="chatbox__enter" onClick={()=>callChatGPT(true)}>get thesis</button></> : <div>Loading...</div>}
+          <textarea className="chatbox__textarea" onChange={getVal} placeholder="enter text here" rows="3" cols="30"></textarea>
+          {showButton? <><br></br><button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={()=>callChatGPT(false)}>get chat response</button><button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={()=>callChatGPT(true)}>get thesis</button></> : <div>Loading...</div>}
         </div>
       </div>
       <div className="chatoutputbox">
         <div>
-          <button className="chatbox__download" onClick={downloadResponse}>download response</button>
+          <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={downloadResponse}>download response</button>
         </div>
         <div id="outputBox" className="chatbox__outputarea">
           {status==200?response:errormessage}

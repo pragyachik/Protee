@@ -11,6 +11,7 @@
 
 .chatbox__outputarea {
   color: rgb(47, 47, 47);
+  white-space: pre-wrap;
 }
 
 .chatoutputbox {

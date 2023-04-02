@@ -78,6 +78,7 @@ const App = () => {
   const [errormessage, setErrorMessage] = useState("200 OK")
   const [showButton, setShowButton] = useState(true)
   const [status, setStatus] = useState(200)
+  // const [unformattedResponseText, setUnformattedResponseText] = useState("")
   
 
   useEffect(()=>{
@@ -101,7 +102,9 @@ const App = () => {
     }
     console.log(response)
     setShowButton(true)
-    let responseText = response.data.choices[0].text;
+    // setUnformattedResponseText(response.data.choices[0].text)
+    let responseText = response.data.choices[0].text//.replaceAll("\n","<br>");
+    console.log(responseText)
     setResponse(responseText)
   }
 
@@ -110,8 +113,8 @@ const App = () => {
   }
 
   const downloadResponse = () => {
-    let value = document.getElementById("outputBox").innerHTML;
-    downloadInnerHtml("output.txt", value,'text/html');
+    // let value = document.getElementById("outputBox").innerHTML;
+    downloadInnerHtml("output.txt", response,'text/html');
   }
 
   return (

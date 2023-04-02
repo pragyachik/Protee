@@ -87,12 +87,16 @@ const App = () => {
     document.getElementById('three').appendChild(renderer.domElement);
   },[])
 
-  const callChatGPT = async () => {
+  const callChatGPT = async (thesis=false) => {
     setShowButton(false)
     console.log(userRequest)
+    let prompt = userRequest
+    if(thesis){
+      prompt = "Write a ten page thesis, in APA style, including citations and bibliography, on the topic\"" + userRequest + "\"";
+    }
     const response = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: userRequest,
+      prompt: prompt,
       temperature: 0,
       max_tokens: 1000,
     });
@@ -125,7 +129,7 @@ const App = () => {
         </div>
         <div className="chatbox__chatarea">
           <textarea className="chatbox__textarea" onChange={getVal} placeholder="enter text here" rows="6" cols="30"></textarea>
-          {showButton? <button className="chatbox__enter" onClick={callChatGPT}>enter</button> : <></>}
+          {showButton? <><br></br><button className="chatbox__enter" onClick={()=>callChatGPT(false)}>get chat response</button><button className="chatbox__enter" onClick={()=>callChatGPT(true)}>get thesis</button></> : <div>Loading...</div>}
         </div>
       </div>
       <div className="chatoutputbox">

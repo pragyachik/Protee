@@ -77,7 +77,7 @@ const App = () => {
       model: "text-davinci-003",
       prompt: userRequest,
       temperature: 0,
-      max_tokens: 10,
+      max_tokens: 100,
     });
     console.log(response)
     let responseText = response.data.choices[0].text;
